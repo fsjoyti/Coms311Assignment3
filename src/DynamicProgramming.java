@@ -1,36 +1,10 @@
 import java.util.*;
 
 public class DynamicProgramming {
-
 	
-	ArrayList<Cell> allCells = new ArrayList<Cell>();  
 	
-	private class Cell {
+	
 
-		private int cost;
-		private int xCoord;
-		private int yCoord;
-		private ArrayList<Integer> parent = new ArrayList<Integer>();
-
-		public Cell(int cost, ArrayList<Integer> parent, int x, int y) {
-			this.cost = cost;
-			this.xCoord=x;
-			this.yCoord = y;
-			
-		}
-		
-		public Cell getCell(){
-			System.out.println("The cell is: " +this);
-			return this;
-		}
-
-		public int getCost() {
-			return cost;
-		}
-
-		
-
-	}
 
 	
 	
@@ -56,7 +30,7 @@ public class DynamicProgramming {
 		
 		int[][] MinCostMatrix = minCostMatrix(M);
 		
-		List<Integer> lastRow = 
+		
 		
 		return null;
 
@@ -69,7 +43,7 @@ public class DynamicProgramming {
 	 * @return
 	 */
 	
-	public int[][] minCostMatrix(int[][] origMatrix) {
+	public static int[][] minCostMatrix(int[][] origMatrix) {
 
 		// Base case -- fill the first row with the first row of the original
 		// matrix
@@ -96,9 +70,8 @@ public class DynamicProgramming {
 					al.add(MinMatrix[i - 1][j]);
 					al.add(MinMatrix[i - 1][j + 1]);
 					//System.out.println("the array List is: " +al +"for: " +MinMatrix[i][j]);
-					Cell cell = new Cell(MinMatrix[i][j], al, i, j);
-					allCells.add(cell);
-					cell.getCell();
+					
+					
 					
 				}
 				else if (j == numCols - 1) {
@@ -109,8 +82,8 @@ public class DynamicProgramming {
 					al.add(MinMatrix[i - 1][j]);
 					al.add(MinMatrix[i - 1][j - 1]);
 					//System.out.println("the array List is: " +al +"for: " +MinMatrix[i][j]);
-					Cell cell = new Cell(MinMatrix[i][j], al, i, j);
-					allCells.add(cell);
+					
+					
 				}
 				
 				else{
@@ -121,13 +94,12 @@ public class DynamicProgramming {
 					al.add(MinMatrix[i - 1][j]);
 					al.add(MinMatrix[i - 1][j + 1]);
 					//System.out.println("the array List is: " +al +"for: " +MinMatrix[i][j]);
-					Cell cell = new Cell(MinMatrix[i][j], al,i,j);
-					allCells.add(cell);
+					
 				}
 			}
 
 		}
-		
+		/*
 		for(int i = 0; i< MinMatrix.length; i++){
 			for(int j = 0; j< MinMatrix[0].length; j++){
 				
@@ -135,6 +107,7 @@ public class DynamicProgramming {
 			}
 			System.out.println();
 		}
+		*/
 		return MinMatrix;
 
 	}
@@ -145,7 +118,7 @@ public class DynamicProgramming {
 	 * @param b
 	 * @return
 	 */
-	private int minForTwo(int a, int b) {
+	private static int minForTwo(int a, int b) {
 
 		if (a <= b)
 			return a;
@@ -162,7 +135,7 @@ public class DynamicProgramming {
 	 * @param c
 	 * @return
 	 */
-	private int minForThree(int a, int b, int c) {
+	private static int minForThree(int a, int b, int c) {
 
 		if ((a <= b && a <= c))
 			return a;
@@ -173,5 +146,29 @@ public class DynamicProgramming {
 		else
 			return c;
 
+	}
+	
+	private class Coordinate{
+		private int X;
+		private int Y;
+		
+		public Coordinate(int X, int Y){
+			this.X = X;
+			this.Y = Y;
+			
+		}
+		
+		public int getX(){
+			return X;
+		}
+		public int getY(){
+			return Y;
+		}
+		   public boolean equals(Coordinate t){
+			   if(t==null){
+				   return false;
+			   }
+			   return X == t.X && Y == t.Y;
+		   }
 	}
 }
