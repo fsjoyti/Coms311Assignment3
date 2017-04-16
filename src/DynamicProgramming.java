@@ -45,7 +45,7 @@ public class DynamicProgramming {
 				simElements.add(i);
 			}*/
 		}
-		
+		//Find the indices with the same min rating
 		for(int i = 1; i< numCols; i++){
 			
 			 if(MinCostMatrix[numRows - 1][i] == min){
@@ -56,10 +56,49 @@ public class DynamicProgramming {
 			
 		}
 		
+		//List<ArrayList<Integer>> Map = new ArrayList<ArrayList<Integer>>();
+		
+		HashMap<Integer, ArrayList<Integer>> Map = new HashMap<Integer, ArrayList<Integer>>();
+		
+		
+		//Handle case for multiple paths to calculate cost
+		if(simElements.size()>1){
+			for(int i = 0; i<simElements.size(); i++){
+				
+				int currentColumn = simElements.get(i);
+				//Handel edge case when the element exits in the first column
+				if(simElements.get(i) == 0){
+					ArrayList<Integer> parent = new ArrayList<Integer>();
+					parent.add(MinCostMatrix[numRows - 2][0]);
+					parent.add(MinCostMatrix[numRows - 2][1]);
+					Map.put(0, parent);
+				}
+				
+				
+				if(simElements.get(i) == numCols - 1){
+					ArrayList<Integer> parent = new ArrayList<Integer>();
+					parent.add(MinCostMatrix[numRows - 2][numCols - 1]);
+					parent.add(MinCostMatrix[numRows - 2][numCols - 2]);
+					Map.put(numCols - 1, parent);
+				}
+				
+				else{
+					ArrayList<Integer> parent = new ArrayList<Integer>();
+					parent.add(MinCostMatrix[numRows - 2][currentColumn - 1]);
+					parent.add(MinCostMatrix[numRows - 2][currentColumn]);
+					parent.add(MinCostMatrix[numRows - 2][currentColumn + 1]);
+					
+					Map.put(currentColumn, parent);
+				}
+				
+			}
+		}
+		
 		//Handle case for which there can be multiple min costs:
-		System.out.println("Number of sim elements " +simElements);
-		System.out.println("Length of the matrix " +simElements.size() );
-		System.out.println(min);
+		//System.out.println("Number of sim elements " +simElements);
+		//System.out.println("Length of the matrix " +simElements.size() );
+		//System.out.println(min);
+		System.out.println(Arrays.asList(Map));
 		return null;
 
 	}
