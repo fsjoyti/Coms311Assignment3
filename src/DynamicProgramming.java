@@ -3,11 +3,6 @@ import java.util.*;
 public class DynamicProgramming {
 	
 	
-	
-
-
-	
-	
 	//TODO remove
 	public DynamicProgramming(){
 		
@@ -30,8 +25,31 @@ public class DynamicProgramming {
 		
 		int[][] MinCostMatrix = minCostMatrix(M);
 		
+		int numRows = MinCostMatrix.length;
+		int numCols = MinCostMatrix[0].length;
 		
+		//List to maintain the number of equal costs 
+		ArrayList<Integer> simElements = new ArrayList<Integer>();
+		//Set the firt element of the last row to be min
+		int min = MinCostMatrix[numRows - 1][0];
+		//Find the min cost to get to the last row (Min in the last row)
+		for(int i = 1; i< numCols; i++){
+			
+			if(MinCostMatrix[numRows - 1][i] < min){
+				min = MinCostMatrix[numRows - 1][i];
+				simElements.add(i);
+			}
+			else if(MinCostMatrix[numRows - 1][i] == min){
+				//Add the index of that element into an arraylist
+				System.out.println(i);
+				simElements.add(i);
+			}
+		}
 		
+		//Handle case for which there can be multiple min costs:
+		System.out.println("Number of sim elements " +simElements );
+		System.out.println("Length of the matrix " +simElements.size() );
+		System.out.println(min);
 		return null;
 
 	}
@@ -99,7 +117,7 @@ public class DynamicProgramming {
 			}
 
 		}
-		/*
+		System.out.println("Matrix is: ");
 		for(int i = 0; i< MinMatrix.length; i++){
 			for(int j = 0; j< MinMatrix[0].length; j++){
 				
@@ -107,7 +125,7 @@ public class DynamicProgramming {
 			}
 			System.out.println();
 		}
-		*/
+		
 		return MinMatrix;
 
 	}
@@ -164,7 +182,8 @@ public class DynamicProgramming {
 		public int getY(){
 			return Y;
 		}
-		   public boolean equals(Coordinate t){
+
+		public boolean equals(Coordinate t){
 			   if(t==null){
 				   return false;
 			   }

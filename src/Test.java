@@ -25,8 +25,8 @@ public class Test {
 		
 		DynamicProgramming dp = new DynamicProgramming();
 		
-		dp.minCostMatrix(matrix);
-		
+		//dp.minCostMatrix(matrix);
+		dp.minCostVC(matrix);
 		
 	}
 
