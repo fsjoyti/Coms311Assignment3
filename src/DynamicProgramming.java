@@ -37,17 +37,27 @@ public class DynamicProgramming {
 			
 			if(MinCostMatrix[numRows - 1][i] < min){
 				min = MinCostMatrix[numRows - 1][i];
-				simElements.add(i);
+				//simElements.add(i);
 			}
-			else if(MinCostMatrix[numRows - 1][i] == min){
+			/*else if(MinCostMatrix[numRows - 1][i] == min){
 				//Add the index of that element into an arraylist
 				System.out.println(i);
 				simElements.add(i);
+			}*/
+		}
+		
+		for(int i = 1; i< numCols; i++){
+			
+			 if(MinCostMatrix[numRows - 1][i] == min){
+				//Add the index of that element into an arraylist
+				//System.out.println(i);
+				simElements.add(i);
 			}
+			
 		}
 		
 		//Handle case for which there can be multiple min costs:
-		System.out.println("Number of sim elements " +simElements );
+		System.out.println("Number of sim elements " +simElements);
 		System.out.println("Length of the matrix " +simElements.size() );
 		System.out.println(min);
 		return null;
