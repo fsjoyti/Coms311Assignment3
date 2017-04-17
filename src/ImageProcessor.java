@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 public class ImageProcessor {
 	/**
@@ -7,8 +8,14 @@ public class ImageProcessor {
 	 * @param imageFile
 	 */
 	public ImageProcessor(String imageFile){
+		int H = 0;
+		int W = 0;
 		
+		//Read the contents of the image
+		Scanner img = new Scanner(imageFile);
 		
+		//get the data
+		int[][] pixelData = new int[H][W];
 		
 	}
 	/**

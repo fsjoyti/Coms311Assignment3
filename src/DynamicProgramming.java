@@ -139,6 +139,7 @@ public class DynamicProgramming {
 		// System.out.println(Arrays.asList(MinCostMap));
 		System.out.println("The returned list is: " + returnedList);
 
+		//Inverse the arraylist to output in the right order
 		int counter = 0;
 		ArrayList<Integer> newList = new ArrayList<Integer>();
 		for (int i = returnedList.size() - 1; i >= 0; i--) {
@@ -153,7 +154,7 @@ public class DynamicProgramming {
 		}
 		System.out.println(newList);
 
-		return returnedList;
+		return newList;
 
 	}
 
