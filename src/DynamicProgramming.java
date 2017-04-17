@@ -1,16 +1,16 @@
 import java.util.*;
 
 public class DynamicProgramming {
-	
-	
-	//TODO remove
-	public DynamicProgramming(){
-		
-		
-		
+
+	private static ArrayList<Integer> returnedList = new ArrayList<Integer>();
+
+	private static int count = 0;
+
+	// TODO remove
+	public DynamicProgramming() {
+
 	}
-	
-	
+
 	/**
 	 * Returns a Min-cost vertical cut. Type of this method must be array list
 	 * of integers.
@@ -20,86 +20,231 @@ public class DynamicProgramming {
 	 */
 
 	public static ArrayList<Integer> minCostVC(int[][] M) {
-		
-		//Go to the last row and find the cell with the min cost. 
-		
+		// List<ArrayList<Integer>> returnedList = new
+		// ArrayList<ArrayList<Integer>>();
+		int r = 0;
+		int c = 0;
+
+		// Go to the last row and find the cell with the min cost.
+
 		int[][] MinCostMatrix = minCostMatrix(M);
-		
+
 		int numRows = MinCostMatrix.length;
 		int numCols = MinCostMatrix[0].length;
-		
-		//List to maintain the number of equal costs 
+
+		// List to maintain the number of equal costs
 		ArrayList<Integer> simElements = new ArrayList<Integer>();
-		//Set the firt element of the last row to be min
+		// Set the first element of the last row to be min
 		int min = MinCostMatrix[numRows - 1][0];
-		//Find the min cost to get to the last row (Min in the last row)
-		for(int i = 1; i< numCols; i++){
-			
-			if(MinCostMatrix[numRows - 1][i] < min){
+		// Find the min cost to get to the last row (Min in the last row)
+		for (int i = 0; i < numCols; i++) {
+
+			if (MinCostMatrix[numRows - 1][i] < min) {
 				min = MinCostMatrix[numRows - 1][i];
-				//simElements.add(i);
+				// simElements.add(i);
 			}
-			/*else if(MinCostMatrix[numRows - 1][i] == min){
-				//Add the index of that element into an arraylist
-				System.out.println(i);
-				simElements.add(i);
-			}*/
+			/*
+			 * else if(MinCostMatrix[numRows - 1][i] == min){ //Add the index of
+			 * that element into an arraylist System.out.println(i);
+			 * simElements.add(i); }
+			 */
 		}
-		//Find the indices with the same min rating
-		for(int i = 1; i< numCols; i++){
-			
-			 if(MinCostMatrix[numRows - 1][i] == min){
-				//Add the index of that element into an arraylist
-				//System.out.println(i);
+		// Find the indices with the same min rating
+		for (int i = 0; i < numCols; i++) {
+
+			if (MinCostMatrix[numRows - 1][i] == min) {
+				// Add the index of that element into an arraylist
+				// System.out.println(i);
 				simElements.add(i);
 			}
-			
+
 		}
-		
-		//List<ArrayList<Integer>> Map = new ArrayList<ArrayList<Integer>>();
-		
+
+		// List<ArrayList<Integer>> Map = new ArrayList<ArrayList<Integer>>();
+
 		HashMap<Integer, ArrayList<Integer>> Map = new HashMap<Integer, ArrayList<Integer>>();
-		
-		
-		//Handle case for multiple paths to calculate cost
-		if(simElements.size()>1){
-			for(int i = 0; i<simElements.size(); i++){
-				
+
+		// Handle case for multiple paths to calculate cost
+		if (simElements.size() > 0) {
+			for (int i = 0; i < simElements.size(); i++) {
+
 				int currentColumn = simElements.get(i);
-				//Handel edge case when the element exits in the first column
-				if(simElements.get(i) == 0){
+				// Handel edge case when the element exits in the first column
+				if (simElements.get(i) == 0) {
 					ArrayList<Integer> parent = new ArrayList<Integer>();
 					parent.add(MinCostMatrix[numRows - 2][0]);
 					parent.add(MinCostMatrix[numRows - 2][1]);
 					Map.put(0, parent);
 				}
-				
-				
-				if(simElements.get(i) == numCols - 1){
+
+				else if (simElements.get(i) == numCols - 1) {
 					ArrayList<Integer> parent = new ArrayList<Integer>();
 					parent.add(MinCostMatrix[numRows - 2][numCols - 1]);
 					parent.add(MinCostMatrix[numRows - 2][numCols - 2]);
 					Map.put(numCols - 1, parent);
 				}
-				
-				else{
+
+				else {
 					ArrayList<Integer> parent = new ArrayList<Integer>();
-					parent.add(MinCostMatrix[numRows - 2][currentColumn - 1]);
+					// if(currentColumn - 1 >0){
+					parent.add(MinCostMatrix[numRows - 2][currentColumn - 1]);// }
 					parent.add(MinCostMatrix[numRows - 2][currentColumn]);
 					parent.add(MinCostMatrix[numRows - 2][currentColumn + 1]);
-					
 					Map.put(currentColumn, parent);
 				}
-				
+
 			}
 		}
-		
-		//Handle case for which there can be multiple min costs:
-		//System.out.println("Number of sim elements " +simElements);
-		//System.out.println("Length of the matrix " +simElements.size() );
-		//System.out.println(min);
-		System.out.println(Arrays.asList(Map));
-		return null;
+		HashMap<Integer, Integer> MinCostMap = new HashMap<Integer, Integer>();
+
+		for (Integer key : Map.keySet()) {
+
+			ArrayList<Integer> myList = Map.get(key);
+
+			Collections.sort(myList);
+			// Get the first smallest element
+			MinCostMap.put(key, myList.get(0));
+		}
+
+		// ArrayList<Integer>
+		int minVal = Integer.MAX_VALUE;
+		int Colindex = 0;
+
+		for (Integer key : MinCostMap.keySet()) {
+
+			Integer value = MinCostMap.get(key);
+
+			if (value < minVal) {
+				minVal = value;
+				Colindex = key;
+			}
+
+		}
+
+		System.out.println("The minValue is: " + minVal + " Index is: " + Colindex);
+		/*
+		 * ArrayList<Integer> vertices = new ArrayList<Integer>();
+		 * vertices.add(numRows - 1); vertices.add(Colindex);
+		 */
+		returnedList.add(numRows - 1);
+		returnedList.add(Colindex);
+
+		Traversal(numRows - 1, Colindex, MinCostMatrix);
+		// System.out.println(returnedList);
+		// Handle case for which there can be multiple min costs:
+		// System.out.println("Number of sim elements " +simElements);
+		// System.out.println("Length of the matrix " +simElements.size() );
+		// System.out.println(min);
+		// System.out.println(Arrays.asList(Map));
+		// System.out.println(Arrays.asList(MinCostMap));
+		System.out.println("The returned list is: " + returnedList);
+
+		int counter = 0;
+		ArrayList<Integer> newList = new ArrayList<Integer>();
+		for (int i = returnedList.size() - 1; i >= 0; i--) {
+
+			counter++;
+			if (counter == 2) {
+				newList.add(returnedList.get(i));
+				newList.add(returnedList.get(i + 1));
+
+				counter = 0;
+			}
+		}
+		System.out.println(newList);
+
+		return returnedList;
+
+	}
+
+	/**
+	 * Executes the traversal from the given cell
+	 * 
+	 * @param row
+	 * @param col
+	 * @return
+	 */
+
+	private static void Traversal(int row, int col, int[][] M) {
+
+		int numRows = M.length;
+		int numCols = M[0].length;
+		int minCost = 0;
+		while (row != 0) {
+
+			if (col == 0) {
+
+				minCost = minForTwo(M[row - 1][col], M[row - 1][col + 1]);
+
+				if (count == 1) {
+					// ArrayList<Integer> vertices = new ArrayList<Integer>();
+					returnedList.add(row - 1);
+					returnedList.add(col);
+					row = row - 1;
+
+					// returnedList.add(vertices);
+				} else if (count == 2) {
+					// ArrayList<Integer> vertices = new ArrayList<Integer>();
+					returnedList.add(row - 1);
+					returnedList.add(col + 1);
+					row = row - 1;
+					col = col + 1;
+					// returnedList.add(vertices);
+				}
+
+			}
+
+			else if (col == numCols - 1) {
+				minCost = minForTwo(M[row - 1][col], M[row - 1][col - 1]);
+
+				if (count == 1) {
+					ArrayList<Integer> vertices = new ArrayList<Integer>();
+					returnedList.add(row - 1);
+					returnedList.add(col);
+					row = row - 1;
+					col = col;
+					// returnedList.add(vertices);
+				} else if (count == 2) {
+					// ArrayList<Integer> vertices = new ArrayList<Integer>();
+					returnedList.add(row - 1);
+					returnedList.add(col - 1);
+					row = row - 1;
+					col = col - 1;
+					// returnedList.add(vertices);
+				}
+			}
+
+			else {
+				minCost = minForThree(M[row - 1][col - 1], M[row - 1][col], M[row - 1][col + 1]);
+
+				if (count == 1) {
+					ArrayList<Integer> vertices = new ArrayList<Integer>();
+					returnedList.add(row - 1);
+					returnedList.add(col - 1);
+					row = row - 1;
+					col = col - 1;
+					// returnedList.add(vertices);
+				} else if (count == 2) {
+					ArrayList<Integer> vertices = new ArrayList<Integer>();
+					returnedList.add(row - 1);
+					returnedList.add(col);
+					row = row - 1;
+					// returnedList.add(vertices);
+				}
+
+				else if (count == 3) {
+					ArrayList<Integer> vertices = new ArrayList<Integer>();
+					returnedList.add(row - 1);
+					returnedList.add(col + 1);
+					row = row - 1;
+					col = col + 1;
+					// returnedList.add(vertices);
+				}
+
+			}
+
+		}
+		// return null;
 
 	}
 
@@ -109,12 +254,12 @@ public class DynamicProgramming {
 	 * @param origMatrix
 	 * @return
 	 */
-	
-	public static int[][] minCostMatrix(int[][] origMatrix) {
+
+	private static int[][] minCostMatrix(int[][] origMatrix) {
 
 		// Base case -- fill the first row with the first row of the original
 		// matrix
-		
+
 		int numRows = origMatrix.length;
 		int numCols = origMatrix[0].length;
 
@@ -136,67 +281,71 @@ public class DynamicProgramming {
 					ArrayList<Integer> al = new ArrayList<Integer>();
 					al.add(MinMatrix[i - 1][j]);
 					al.add(MinMatrix[i - 1][j + 1]);
-					//System.out.println("the array List is: " +al +"for: " +MinMatrix[i][j]);
-					
-					
-					
-				}
-				else if (j == numCols - 1) {
+					// System.out.println("the array List is: " +al +"for: "
+					// +MinMatrix[i][j]);
+
+				} else if (j == numCols - 1) {
 
 					MinMatrix[i][j] = origMatrix[i][j] + minForTwo(MinMatrix[i - 1][j], MinMatrix[i - 1][j - 1]);
-					
+
 					ArrayList<Integer> al = new ArrayList<Integer>();
 					al.add(MinMatrix[i - 1][j]);
 					al.add(MinMatrix[i - 1][j - 1]);
-					//System.out.println("the array List is: " +al +"for: " +MinMatrix[i][j]);
-					
-					
+					// System.out.println("the array List is: " +al +"for: "
+					// +MinMatrix[i][j]);
+
 				}
-				
-				else{
-					
-					MinMatrix[i][j] = origMatrix[i][j] + minForThree(MinMatrix[i-1][j-1], MinMatrix[i-1][j], MinMatrix[i-1][j+1]);
+
+				else {
+
+					MinMatrix[i][j] = origMatrix[i][j]
+							+ minForThree(MinMatrix[i - 1][j - 1], MinMatrix[i - 1][j], MinMatrix[i - 1][j + 1]);
 					ArrayList<Integer> al = new ArrayList<Integer>();
 					al.add(MinMatrix[i - 1][j - 1]);
 					al.add(MinMatrix[i - 1][j]);
 					al.add(MinMatrix[i - 1][j + 1]);
-					//System.out.println("the array List is: " +al +"for: " +MinMatrix[i][j]);
-					
+					// System.out.println("the array List is: " +al +"for: "
+					// +MinMatrix[i][j]);
+
 				}
 			}
 
 		}
 		System.out.println("Matrix is: ");
-		for(int i = 0; i< MinMatrix.length; i++){
-			for(int j = 0; j< MinMatrix[0].length; j++){
-				
+		for (int i = 0; i < MinMatrix.length; i++) {
+			for (int j = 0; j < MinMatrix[0].length; j++) {
+
 				System.out.print(MinMatrix[i][j] + " ");
 			}
 			System.out.println();
 		}
-		
+
 		return MinMatrix;
 
 	}
 
 	/**
 	 * computes min b/w two nums
+	 * 
 	 * @param a
 	 * @param b
 	 * @return
 	 */
 	private static int minForTwo(int a, int b) {
 
-		if (a <= b)
+		if (a <= b) {
+			count = 1;
 			return a;
-
-		else
+		} else {
+			count = 2;
 			return b;
+		}
 
 	}
 
 	/**
 	 * returns min b/w three nums
+	 * 
 	 * @param a
 	 * @param b
 	 * @param c
@@ -204,39 +353,19 @@ public class DynamicProgramming {
 	 */
 	private static int minForThree(int a, int b, int c) {
 
-		if ((a <= b && a <= c))
+		if ((a <= b && a <= c)) {
+			count = 1;
 			return a;
-
-		else if (b < a && b <= c)
+		} else if (b < a && b <= c) {
+			count = 2;
 			return b;
+		}
 
-		else
+		else {
+			count = 3;
 			return c;
-
-	}
-	
-	private class Coordinate{
-		private int X;
-		private int Y;
-		
-		public Coordinate(int X, int Y){
-			this.X = X;
-			this.Y = Y;
-			
-		}
-		
-		public int getX(){
-			return X;
-		}
-		public int getY(){
-			return Y;
 		}
 
-		public boolean equals(Coordinate t){
-			   if(t==null){
-				   return false;
-			   }
-			   return X == t.X && Y == t.Y;
-		   }
 	}
+
 }
