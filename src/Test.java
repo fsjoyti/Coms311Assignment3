@@ -1,7 +1,8 @@
+import java.net.MalformedURLException;
 
 public class Test {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws MalformedURLException {
 		// TODO Auto-generated method stub
 		
 		int[][] matrix = new int[3][3];
@@ -33,7 +34,12 @@ public class Test {
 		DynamicProgramming dp = new DynamicProgramming();
 		
 		//dp.minCostMatrix(matrix);
-		dp.minCostVC(matrix);
+		//dp.minCostVC(matrix);
+		
+		ImageProcessor ip = new ImageProcessor("Original.jpg");
+		
+		
+		//System.out.println(ip.H);
 		
 	}
 

@@ -69,7 +69,7 @@ public class DynamicProgramming {
 			for (int i = 0; i < simElements.size(); i++) {
 
 				int currentColumn = simElements.get(i);
-				// Handel edge case when the element exits in the first column
+				// Handle edge case when the element exits in the first column
 				if (simElements.get(i) == 0) {
 					ArrayList<Integer> parent = new ArrayList<Integer>();
 					parent.add(MinCostMatrix[numRows - 2][0]);
@@ -361,7 +361,6 @@ public class DynamicProgramming {
 			count = 2;
 			return b;
 		}
-
 		else {
 			count = 3;
 			return c;
