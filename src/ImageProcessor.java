@@ -13,7 +13,8 @@ public class ImageProcessor {
 	int H = 0;
 	int W = 0;
 	Picture picture;
-
+	Picture newPicture;
+	int width = 0;
 	// int[][] pixelData;
 	/**
 	 * Parameter imageFile holds the name of the image that will be manipulated.
@@ -54,24 +55,37 @@ public class ImageProcessor {
 	 * @return
 	 */
 	 public Picture reduceWidth(double x) {
-		 
-		 for(int m = W - 1; m >= W *x ; m --){
+		 int w_temp = W;
+		 int h_temp = H;
+		 Picture pic = picture;
+		 //newPicture = picture;
+		 width = (int) (W*x);
+		 for(int m = w_temp - 1; m >= w_temp *x ; m --){
+			 
 			 
 			 int[][] Importance = new int[H][W];
 			 //Compute a Matrix named I, where I[i, j] = Importance(M[i, j]).
+			 
 			 for(int i = 0; i<H; i++){
 				 for(int j = 0; j<W; j++){
+					 
 					 Importance[i][j] = Importance(i, j);
 				 }
 			 }
+			 
 			 
 			 ArrayList<Integer> minImportanceCost = new ArrayList<Integer>();
 			 
 			 //DynamicProgramming dp = new DynamicProgramming();
 			 minImportanceCost = DynamicProgramming.minCostVC(Importance);
 			 
-			 modifiedPic(picture, minImportanceCost, x);
 			 
+			 
+			 pic = modifiedPic(picture, minImportanceCost, x, m);
+			 
+			 picture = pic;
+			 H = picture.height();
+			 W = picture.width();
 			 
 		 }
 		
@@ -86,24 +100,36 @@ public class ImageProcessor {
 
 	// private compute
 	 
-	 private Picture modifiedPic(Picture pic, ArrayList<Integer> minImpCost, double x){
+	 private Picture modifiedPic(Picture pic, ArrayList<Integer> minImpCost, double x, int width){
 		 
-		 
-		//for(int j = W - 1; j >= W *x ; j --){
-			
-			for(int i = 0; i<minImpCost.size(); i = i+2){
-				 int xCoord = minImpCost.get(i);
-				 int yCoord = minImpCost.get(i+1);
-
-				 pic.set(yCoord, xCoord, new Color(0));//pic.get(yCoord - 2, xCoord));
-			 }
+		 Picture newPic = new Picture(width, H);
+		 int flag;
+		 int counter = 1;
+		 for(int i = 0; i< H; i++){ // this would be height of the old picture
+			 flag = 0;
+			 //Get j coord to remove
+			 int yCoord = minImpCost.get(counter);
+			 counter = counter + 2;
 			 
+			 for(int j = 0; j<W; j++){
+				 //int flag = 0;
+				 if(j != yCoord){
+					 
+					 newPic.set(j - flag, i, pic.get(j , i));
+				 }
+				 else{
+					 flag = 1;
+				 }
+			 }
+		 }
 		 
-		 Color c = new Color(255);
-		 pic.set((int) ((pic.width()) - 1), pic.height() - 1, c);
-		 
+		 //Color c = new Color(255);
+		// pic.set((int) ((pic.width()) - 1), pic.height() - 1, c);
+		 //newPicture = new Picture(newPic.width(), newPic.height());
+		 //newPicture = newPic;
 		 //pic.show();
-		 return pic;
+		 
+		 return newPic;
 		 
 	 }
 	 
