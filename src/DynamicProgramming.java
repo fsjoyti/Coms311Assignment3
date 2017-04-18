@@ -121,7 +121,7 @@ public class DynamicProgramming {
 
 		}
 
-		System.out.println("The minValue is: " + minVal + " Index is: " + Colindex);
+		//System.out.println("The minValue is: " + minVal + " Index is: " + Colindex);
 		/*
 		 * ArrayList<Integer> vertices = new ArrayList<Integer>();
 		 * vertices.add(numRows - 1); vertices.add(Colindex);
@@ -137,7 +137,7 @@ public class DynamicProgramming {
 		// System.out.println(min);
 		// System.out.println(Arrays.asList(Map));
 		// System.out.println(Arrays.asList(MinCostMap));
-		System.out.println("The returned list is: " + returnedList);
+		//System.out.println("The returned list is: " + returnedList);
 
 		//Inverse the arraylist to output in the right order
 		int counter = 0;
@@ -152,7 +152,7 @@ public class DynamicProgramming {
 				counter = 0;
 			}
 		}
-		System.out.println(newList);
+		//System.out.println(newList);
 
 		return newList;
 
@@ -266,8 +266,8 @@ public class DynamicProgramming {
 
 		int[][] MinMatrix = new int[numRows][numCols];
 
-		for (int i = 0; i < numRows; i++) {
-
+		//for (int i = 0; i < numRows; i++) {
+		for (int i = 0; i < numCols; i++) {
 			MinMatrix[0][i] = origMatrix[0][i];
 
 		}
@@ -312,7 +312,7 @@ public class DynamicProgramming {
 			}
 
 		}
-		System.out.println("Matrix is: ");
+		/*System.out.println("Matrix is: ");
 		for (int i = 0; i < MinMatrix.length; i++) {
 			for (int j = 0; j < MinMatrix[0].length; j++) {
 
@@ -320,7 +320,7 @@ public class DynamicProgramming {
 			}
 			System.out.println();
 		}
-
+*/
 		return MinMatrix;
 
 	}
