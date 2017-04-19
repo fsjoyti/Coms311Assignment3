@@ -36,11 +36,13 @@ public class Test {
 		//dp.minCostMatrix(matrix);
 		//dp.minCostVC(matrix);
 		
-		ImageProcessor ip = new ImageProcessor("Original.jpg");
+		//ImageProcessor ip = new ImageProcessor("Original.jpg");
 		
-		Picture pic = ip.reduceWidth(0.73);
-		pic.save("resize.jpg");
+		//Picture pic = ip.reduceWidth(0.73);
+		//pic.save("resize.jpg");
 		//System.out.println(ip.H);
+		
+		dp.stringAlignment("AAAC","AGC");
 		
 	}
 

@@ -15,7 +15,8 @@ public class DynamicProgramming {
 	
 	public static String stringAlignment(String x, String y) {
 		int penalty = 4;
-		
+		//System.out.println(x);
+		//System.out.println(y);
 		int score = 0;
 		int[][] scoringMatrix = new int[x.length()+1][y.length()+1];
 		scoringMatrix[0][0]=0;
@@ -30,15 +31,28 @@ public class DynamicProgramming {
 			
 		}
 		
-		for (int i = 1; i <= x.length();i++){
-			for (int j = 1; j <= y.length(); j++){
-				int match = scoringMatrix[i-1][j-1]+penalty(x.charAt(i-1),y.charAt(i-1));
+		for (int i = 1; i < x.length()+1;i++){
+			for (int j = 1; j <y.length()+1; j++){
+				char first = x.charAt(i-1);
+				
+				char second = y.charAt(j-1);
+				
+				//System.out.println(x.charAt(i-1));
+				//System.out.println(y.charAt(i-1));
+				int match = scoringMatrix[i-1][j-1]+penalty(first,second);
 				int insert = scoringMatrix[i][j-1]+penalty;
 				int delete = scoringMatrix[i-1][j]+penalty;
 				scoringMatrix[i][j] = min(match,insert,delete);
 				
 				
 			}
+		}
+		
+		for (int i = 0; i <= x.length();i++ ){
+			for (int j = 0; j <= y.length();j++ ){
+				System.out.print(scoringMatrix[i][j]);
+			}
+			System.out.println();
 		}
 		return "";
 		
