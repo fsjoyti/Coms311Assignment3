@@ -11,6 +11,36 @@ public class DynamicProgramming {
 
 	}
 
+	
+	
+	public static String stringAlignment(String x, String y) {
+		int penalty = 4;
+		
+		int score = 0;
+		int[][] scoringMatrix = new int[x.length()+1][y.length()+1];
+		scoringMatrix[0][0]=0;
+		for (int i = 1; i <= x.length();i++){
+			 scoringMatrix[i][0]= scoringMatrix[i-1][0]+penalty;
+			
+		}
+		
+		for (int j = 1; j<=y.length();j++){
+			
+			 scoringMatrix[0][j]= scoringMatrix[0][j-1]+penalty;
+			
+		}
+		
+		for (int i = 1; i <= x.length();i++){
+			for (int j = 1; j <= y.length(); j++){
+				int match = scoringMatrix[i-1][j-1]+penalty(x.charAt(i-1),y.charAt(i-1));
+				
+				
+			}
+		}
+		return "";
+		
+	}
+	
 	/**
 	 * Returns a Min-cost vertical cut. Type of this method must be array list
 	 * of integers.
@@ -367,5 +397,20 @@ public class DynamicProgramming {
 		}
 
 	}
+	private static int penalty(char a, char b){
+	if (a==b){
+		return 0;
+	}
+	else if (a=='$'||b=='$'){
+		return 4;
+	}
+	else {
+		return 2;
+	}
+	
+	}
+	
 
 }
+
+
