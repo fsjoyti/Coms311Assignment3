@@ -38,7 +38,8 @@ public class Test {
 		
 		ImageProcessor ip = new ImageProcessor("Original.jpg");
 		
-		
+		Picture pic = ip.reduceWidth(0.73);
+		pic.save("resize.jpg");
 		//System.out.println(ip.H);
 		
 	}
