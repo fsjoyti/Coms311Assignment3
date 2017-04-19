@@ -33,6 +33,9 @@ public class DynamicProgramming {
 		for (int i = 1; i <= x.length();i++){
 			for (int j = 1; j <= y.length(); j++){
 				int match = scoringMatrix[i-1][j-1]+penalty(x.charAt(i-1),y.charAt(i-1));
+				int insert = scoringMatrix[i][j-1]+penalty;
+				int delete = scoringMatrix[i-1][j]+penalty;
+				scoringMatrix[i][j] = min(match,insert,delete);
 				
 				
 			}
@@ -396,6 +399,24 @@ public class DynamicProgramming {
 			return c;
 		}
 
+	}
+	
+	private static int min (int a, int b, int c){
+		if ((a <= b && a <= c)) {
+			return a;
+		}
+		
+		 else if (b < a && b <= c) {
+				
+				return b;
+			}
+		
+		 else {
+				
+				return c;
+			}
+		
+		
 	}
 	private static int penalty(char a, char b){
 	if (a==b){
