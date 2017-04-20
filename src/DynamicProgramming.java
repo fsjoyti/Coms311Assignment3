@@ -52,50 +52,44 @@ public class DynamicProgramming {
 				
 			}
 		}
-		/*
-		for (int i = 0; i < y.length()+1;i++){
-			for (int j = 0; j <x.length()+1; j++){
-				
-				
-				System.out.print(scoringMatrix[i][j]);
-				
-								
-				
-			}
-			System.out.println();
-		}
-		*/
-		int i =1;
-		int j = 1;
-		 while (i <= y.length() && j <= x.length()){
+		
+		
+		
+		int i = y.length();
+		int j = x.length();
+		 while (i > 0 && j > 0){
 			 char first  = y.charAt(i-1);
 				
 			 char second = x.charAt(j-1);
 			 int match = scoringMatrix[i-1][j-1];
 			 int insert = scoringMatrix[i][j-1];
 			 int delete = scoringMatrix[i-1][j];
+			 int penalty_value = penalty(first,second);
 			 
 			 int currentCell = scoringMatrix[i][j];
 			 
-			 if (currentCell == scoringMatrix[i-1][j-1] +penalty(first,second)){
+			 if (currentCell == match + penalty_value){
 				 
 				 result += first;
 				 
-				 i++;
-				 j++;
+			
+				 
+				 i--;
+				 j--;
 			 }
 			 
-			 else if (currentCell == insert +penalty ){
+			  if (currentCell == insert +penalty ){
 				 
 				 result += "$";
+				 
 				
-				 j++;
+				 j--;
 				 
 			 }
-			 else if (currentCell == delete +penalty ){
+			  if (currentCell == delete +penalty ){
 				 result += first;
-				
-				 i++;
+				 
+				 i--;
 				 
 			 }
 			 
@@ -109,24 +103,30 @@ public class DynamicProgramming {
 			
 		 }
 		 
-		 while (i <= y.length()){
+		 while (i > 0){
 			 char first  = y.charAt(i-1);
 			
 			 result += first;
 			 
 			
-			 i++;
+			 i--;
 			 
 		 }
 		 
-		 while (j <= x.length()){
+		 while (j > 0){
+			 
+			 
 			 result += '$';
 			
-			 j++;
+			
+			 j--;
 			 
 		 }
 		 
-		System.out.println(result);
+		
+		 String finalString = new StringBuilder(result).reverse().toString();
+		System.out.println(finalString);
+		
 	
 		return result;
 		
