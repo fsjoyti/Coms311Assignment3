@@ -15,46 +15,120 @@ public class DynamicProgramming {
 	
 	public static String stringAlignment(String x, String y) {
 		int penalty = 4;
-		//System.out.println(x);
-		//System.out.println(y);
+		System.out.println(x);
+		System.out.println(y);
 		int score = 0;
-		int[][] scoringMatrix = new int[x.length()+1][y.length()+1];
+		String result = "";
+		int[][] scoringMatrix = new int[y.length()+1][x.length()+1];
 		scoringMatrix[0][0]=0;
-		for (int i = 1; i <= x.length();i++){
+		for (int i = 1; i <= y.length();i++){
 			 scoringMatrix[i][0]= scoringMatrix[i-1][0]+penalty;
 			
 		}
 		
-		for (int j = 1; j<=y.length();j++){
+		for (int j = 1; j<=x.length();j++){
 			
 			 scoringMatrix[0][j]= scoringMatrix[0][j-1]+penalty;
 			
 		}
 		
-		for (int i = 1; i < x.length()+1;i++){
-			for (int j = 1; j <y.length()+1; j++){
-				char first = x.charAt(i-1);
+		for (int i = 1; i <= y.length();i++){
+			for (int j = 1; j <=x.length(); j++){
+				char first = y.charAt(i-1);
 				
-				char second = y.charAt(j-1);
+				char second = x.charAt(j-1);
 				
 				//System.out.println(x.charAt(i-1));
 				//System.out.println(y.charAt(i-1));
 				int match = scoringMatrix[i-1][j-1]+penalty(first,second);
 				int insert = scoringMatrix[i][j-1]+penalty;
 				int delete = scoringMatrix[i-1][j]+penalty;
-				scoringMatrix[i][j] = min(match,insert,delete);
+				int min = min(match,insert,delete);
+				scoringMatrix[i][j] = min;
+				
+		
+				
 				
 				
 			}
 		}
-		
-		for (int i = 0; i <= x.length();i++ ){
-			for (int j = 0; j <= y.length();j++ ){
+		/*
+		for (int i = 0; i < y.length()+1;i++){
+			for (int j = 0; j <x.length()+1; j++){
+				
+				
 				System.out.print(scoringMatrix[i][j]);
+				
+								
+				
 			}
 			System.out.println();
 		}
-		return "";
+		*/
+		int i =1;
+		int j = 1;
+		 while (i <= y.length() && j <= x.length()){
+			 char first  = y.charAt(i-1);
+				
+			 char second = x.charAt(j-1);
+			 int match = scoringMatrix[i-1][j-1];
+			 int insert = scoringMatrix[i][j-1];
+			 int delete = scoringMatrix[i-1][j];
+			 
+			 int currentCell = scoringMatrix[i][j];
+			 
+			 if (currentCell == scoringMatrix[i-1][j-1] +penalty(first,second)){
+				 
+				 result += first;
+				 
+				 i++;
+				 j++;
+			 }
+			 
+			 else if (currentCell == insert +penalty ){
+				 
+				 result += "$";
+				
+				 j++;
+				 
+			 }
+			 else if (currentCell == delete +penalty ){
+				 result += first;
+				
+				 i++;
+				 
+			 }
+			 
+			
+			 
+			 
+			 
+			 
+			 
+			 
+			
+		 }
+		 
+		 while (i <= y.length()){
+			 char first  = y.charAt(i-1);
+			
+			 result += first;
+			 
+			
+			 i++;
+			 
+		 }
+		 
+		 while (j <= x.length()){
+			 result += '$';
+			
+			 j++;
+			 
+		 }
+		 
+		System.out.println(result);
+	
+		return result;
 		
 	}
 	
