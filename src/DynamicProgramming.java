@@ -43,7 +43,7 @@ public class DynamicProgramming {
 				int match = scoringMatrix[i-1][j-1]+penalty(first,second);
 				int insert = scoringMatrix[i][j-1]+penalty;
 				int delete = scoringMatrix[i-1][j]+penalty;
-				int min = min(match,insert,delete);
+				int min = min(match,delete);
 				scoringMatrix[i][j] = min;
 				
 		
@@ -57,6 +57,8 @@ public class DynamicProgramming {
 		
 		int i = y.length();
 		int j = x.length();
+		int count = 0;
+		int length_difference = x.length()-y.length();
 		 while (i > 0 && j > 0){
 			 char first  = y.charAt(i-1);
 				
@@ -69,8 +71,19 @@ public class DynamicProgramming {
 			 int currentCell = scoringMatrix[i][j];
 			 
 			 if (currentCell == match + penalty_value){
-				 
+				
+				 if (first!=second && count <length_difference ){
+					
+					 result +='$';
+					 count++;
+				 }
+			
 				 result += first;
+				 
+				 
+				 
+				
+				 
 				 
 			
 				 
@@ -78,6 +91,7 @@ public class DynamicProgramming {
 				 j--;
 			 }
 			 
+			 /*
 			  if (currentCell == insert +penalty ){
 				 
 				 result += "$";
@@ -86,8 +100,10 @@ public class DynamicProgramming {
 				 j--;
 				 
 			 }
-			  if (currentCell == delete +penalty ){
-				 result += first;
+			 */
+			 
+			 else if (currentCell == delete +penalty ){
+				 result += '$';
 				 
 				 i--;
 				 
@@ -102,7 +118,7 @@ public class DynamicProgramming {
 			 
 			
 		 }
-		 
+		 /*
 		 while (i > 0){
 			 char first  = y.charAt(i-1);
 			
@@ -123,7 +139,7 @@ public class DynamicProgramming {
 			 
 		 }
 		 
-		
+		*/
 		 String finalString = new StringBuilder(result).reverse().toString();
 		System.out.println(finalString);
 		
@@ -489,19 +505,16 @@ public class DynamicProgramming {
 
 	}
 	
-	private static int min (int a, int b, int c){
-		if ((a <= b && a <= c)) {
+	private static int min (int a, int b){
+		if ((a <= b )) {
 			return a;
 		}
 		
-		 else if (b < a && b <= c) {
-				
-				return b;
-			}
+		
 		
 		 else {
 				
-				return c;
+				return b;
 			}
 		
 		
