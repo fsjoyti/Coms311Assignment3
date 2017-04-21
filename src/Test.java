@@ -42,7 +42,7 @@ public class Test {
 		//pic.save("resize.jpg");
 		//System.out.println(ip.H);
 		
-		dp.stringAlignment("BD","B");
+		dp.stringAlignment("Souparni","Fahmida");
 		
 	}
 

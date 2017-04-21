@@ -15,8 +15,8 @@ public class DynamicProgramming {
 	
 	public static String stringAlignment(String x, String y) {
 		int penalty = 4;
-		System.out.println(x.length());
-		System.out.println(y.length());
+		System.out.println(x);
+		System.out.println(y);
 		int score = 0;
 		String result = "";
 		
@@ -24,7 +24,7 @@ public class DynamicProgramming {
 		scoringMatrix[0][0]=0;
 		
 		for (int i = 1; i <= y.length();i++){
-			 scoringMatrix[i][0]= scoringMatrix[i-1][0]+penalty;
+			 scoringMatrix[i][0]= 999999;
 			
 		}
 		
@@ -36,6 +36,8 @@ public class DynamicProgramming {
 		
 		for (int i = 1; i <= y.length();i++){
 			for (int j = 1; j <=x.length(); j++){
+				
+				
 				char first = y.charAt(i-1);
 				
 				char second = x.charAt(j-1);
@@ -47,6 +49,10 @@ public class DynamicProgramming {
 				int delete = scoringMatrix[i-1][j]+penalty;
 				int min = min(match,delete,insert);
 				scoringMatrix[i][j] = min;
+				
+				if (i>j){
+					scoringMatrix[i][j] = 999999;
+				}
 				
 		
 				
@@ -108,6 +114,11 @@ public class DynamicProgramming {
 		*/
 
 		while (i > 0 && j > 0){
+			
+			if ( i > j){
+				System.out.println("Y is bigger than X. Sorry we cannot perform string alignment");
+				break;
+			}
 			 char first  = y.charAt(i-1);
 			 System.out.println("Value of i "+i);
 			 System.out.println("Value of j "+j);
@@ -127,11 +138,7 @@ public class DynamicProgramming {
 			 if (currentCell == match + penalty_value){
 				
 				
-				 if (i == j && count <length_difference ){
-					
-					 result +='$';
-					 count++;
-				 }
+				
 				 
 				 
 				 
@@ -164,10 +171,8 @@ public class DynamicProgramming {
 			  
 			 else  if (currentCell == insert +penalty ){
 					 
-					 //result += "$";
-				  System.out.println("Inside insert "+i);
-				  System.out.println("Inside insert "+j);
-				  System.out.println(currentCell);
+					 result += "$";
+				
 					
 					 j--;
 					 
@@ -197,6 +202,9 @@ public class DynamicProgramming {
 		*/ 
 		 while (j > 0){
 			 
+			if (i > j){
+				break;
+			}
 			 
 			 result += '$';
 			
