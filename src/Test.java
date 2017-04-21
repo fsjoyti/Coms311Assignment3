@@ -42,7 +42,12 @@ public class Test {
 		//pic.save("resize.jpg");
 		//System.out.println(ip.H);
 		
-		dp.stringAlignment("Souparni","Fahmida");
+		dp.stringAlignment("Last Christmas I gave you my heart but the very next day you gave it away.This year to save it from tears I will give it to someone special.","All I want from Christmas is you");
+		String y = "hallelujah!!!!hallelujah dwfwf";
+		
+		String x = "h$$$e$$$$$$$$$$$$l$l$$$$$$$$$o";
+		
+		
 		
 	}
 

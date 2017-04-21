@@ -161,7 +161,7 @@ public class DynamicProgramming {
 			 
 			
 			 
-			 else if (currentCell == delete +penalty ){
+			  if (currentCell == delete +penalty ){
 				 //result += '$';
 				// System.out.println("Inside delete "+i);
 				 i--;
@@ -169,7 +169,7 @@ public class DynamicProgramming {
 			 }
 			  
 			  
-			 else  if (currentCell == insert +penalty ){
+			  if (currentCell == insert +penalty ){
 					 
 					 result += "$";
 				
@@ -200,13 +200,15 @@ public class DynamicProgramming {
 			 
 		 }
 		*/ 
+		
+		
 		 while (j > 0){
 			 
 			if (i > j){
 				break;
 			}
 			 
-			 result += '$';
+			result += '$';
 			
 			
 			 j--;
@@ -216,7 +218,7 @@ public class DynamicProgramming {
 		 
 		 
 		 
-		
+		 
 		 
 		 for (i = 0; i <= y.length();i++){
 			 for(j=0; j<= x.length();j++){
@@ -228,7 +230,7 @@ public class DynamicProgramming {
 		System.out.println(finalString);
 		
 	
-		return result;
+		return finalString;
 		
 	}
 	
