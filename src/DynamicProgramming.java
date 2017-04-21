@@ -15,12 +15,14 @@ public class DynamicProgramming {
 	
 	public static String stringAlignment(String x, String y) {
 		int penalty = 4;
-		System.out.println(x);
-		System.out.println(y);
+		System.out.println(x.length());
+		System.out.println(y.length());
 		int score = 0;
 		String result = "";
+		
 		int[][] scoringMatrix = new int[y.length()+1][x.length()+1];
 		scoringMatrix[0][0]=0;
+		
 		for (int i = 1; i <= y.length();i++){
 			 scoringMatrix[i][0]= scoringMatrix[i-1][0]+penalty;
 			
@@ -43,7 +45,7 @@ public class DynamicProgramming {
 				int match = scoringMatrix[i-1][j-1]+penalty(first,second);
 				int insert = scoringMatrix[i][j-1]+penalty;
 				int delete = scoringMatrix[i-1][j]+penalty;
-				int min = min(match,delete);
+				int min = min(match,delete,insert);
 				scoringMatrix[i][j] = min;
 				
 		
@@ -53,15 +55,64 @@ public class DynamicProgramming {
 			}
 		}
 		
-		
+		 for (int i = 0; i <= y.length();i++){
+			 for(int j=0; j<= x.length();j++){
+				 System.out.print(scoringMatrix[i][j]+" ");
+			 }
+			 System.out.println();
+		 }
 		
 		int i = y.length();
 		int j = x.length();
 		int count = 0;
 		int length_difference = x.length()-y.length();
-		 while (i > 0 && j > 0){
+		
+		/*
+		while (i < x.length()&& j < y.length()){
+			//System.out.println(i);
+			//System.out.println(j);
 			 char first  = y.charAt(i-1);
-				
+			 char second = x.charAt(j-1);
+			 int match = scoringMatrix[i-1][j-1];
+			 int insert = scoringMatrix[i][j-1];
+			 int delete = scoringMatrix[i-1][j];
+			 int currentCell = scoringMatrix[i][j];
+			 
+			 System.out.println(currentCell);
+			 System.out.println(penalty(first,second));
+			 
+			 if (currentCell == match+penalty(first,second) )
+			 {
+				 result +=first;
+				 i++;
+				 j++;
+			 }
+			 
+			 if (currentCell == insert +penalty){
+				 j++;
+			 }
+			 
+			 else {
+			
+				 
+				 
+					 result +='$';
+					 i++;
+				 }
+				 
+			 
+			 System.out.println();
+			
+		
+		}
+		*/
+
+		while (i > 0 && j > 0){
+			 char first  = y.charAt(i-1);
+			 System.out.println("Value of i "+i);
+			 System.out.println("Value of j "+j);
+			 
+			
 			 char second = x.charAt(j-1);
 			 int match = scoringMatrix[i-1][j-1];
 			 int insert = scoringMatrix[i][j-1];
@@ -69,14 +120,22 @@ public class DynamicProgramming {
 			 int penalty_value = penalty(first,second);
 			 
 			 int currentCell = scoringMatrix[i][j];
+			 System.out.println(currentCell);
+			 
+			 
 			 
 			 if (currentCell == match + penalty_value){
 				
-				 if (first!=second && count <length_difference ){
+				
+				 if (i == j && count <length_difference ){
 					
 					 result +='$';
 					 count++;
 				 }
+				 
+				 
+				 
+				 
 			
 				 result += first;
 				 
@@ -91,23 +150,28 @@ public class DynamicProgramming {
 				 j--;
 			 }
 			 
-			 /*
-			  if (currentCell == insert +penalty ){
-				 
-				 result += "$";
-				 
-				
-				 j--;
-				 
-			 }
-			 */
+			 
+			 
+			
 			 
 			 else if (currentCell == delete +penalty ){
-				 result += '$';
-				 
+				 //result += '$';
+				// System.out.println("Inside delete "+i);
 				 i--;
 				 
 			 }
+			  
+			  
+			 else  if (currentCell == insert +penalty ){
+					 
+					 //result += "$";
+				  System.out.println("Inside insert "+i);
+				  System.out.println("Inside insert "+j);
+				  System.out.println(currentCell);
+					
+					 j--;
+					 
+				 }
 			 
 			
 			 
@@ -118,6 +182,8 @@ public class DynamicProgramming {
 			 
 			
 		 }
+		 
+		 
 		 /*
 		 while (i > 0){
 			 char first  = y.charAt(i-1);
@@ -128,7 +194,7 @@ public class DynamicProgramming {
 			 i--;
 			 
 		 }
-		 
+		*/ 
 		 while (j > 0){
 			 
 			 
@@ -139,7 +205,17 @@ public class DynamicProgramming {
 			 
 		 }
 		 
-		*/
+		 
+		 
+		 
+		
+		 
+		 for (i = 0; i <= y.length();i++){
+			 for(j=0; j<= x.length();j++){
+				 System.out.print(scoringMatrix[i][j]+" ");
+			 }
+			 System.out.println();
+		 }
 		 String finalString = new StringBuilder(result).reverse().toString();
 		System.out.println(finalString);
 		
@@ -505,16 +581,19 @@ public class DynamicProgramming {
 
 	}
 	
-	private static int min (int a, int b){
-		if ((a <= b )) {
+	private static int min (int a, int b,int c){
+		if ((a <= b && a<=c )) {
 			return a;
 		}
 		
+		else if (b <=a && b<=c){
+			return b;
+		}
 		
 		
 		 else {
 				
-				return b;
+				return c ;
 			}
 		
 		
